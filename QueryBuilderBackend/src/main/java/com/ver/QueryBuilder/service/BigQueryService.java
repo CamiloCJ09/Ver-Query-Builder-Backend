@@ -58,7 +58,7 @@ public class BigQueryService {
         }
 
         log.info("service gctj queryJob: " + queryJob);
-
+        
         // Check for errors
         if (queryJob == null) {
             throw new RuntimeException("Job no longer exists");
