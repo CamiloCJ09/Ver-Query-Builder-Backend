@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -13,7 +15,7 @@ public class CommentOutDTO {
 
     private String comment;
 
-    private String costumerId;
+    private UUID costumerId;
 
-    private String userQueryId;
+    private UUID userQueryId;
 }

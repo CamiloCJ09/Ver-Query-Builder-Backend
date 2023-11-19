@@ -9,6 +9,7 @@ import com.ver.QueryBuilder.repository.UserQueryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +29,7 @@ public class UserQueryService {
         UserQuery userQuery = userQueryMapper.toUserQuery(userQueryInDTO);
         userQuery.setCostumer(costumerRepository.findCostumerByUsername(userQueryInDTO.getCostumer())
                 .orElseThrow(() -> new RuntimeException("Costumer not found")));
+        userQuery.setComments(new ArrayList<>());
         return userQueryMapper.toUserQueryOutDTO(userQueryRepository.save(userQuery));
     }
 }

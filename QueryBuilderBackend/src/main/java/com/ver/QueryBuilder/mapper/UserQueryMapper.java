@@ -9,9 +9,11 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserQueryMapper {
 
+    final CommentMapper commentMapper = new CommentMapperImpl();
     @Mapping(target = "costumer", ignore = true)
     UserQuery toUserQuery(UserQueryInDTO userQueryInDTO);
 
     @Mapping(target = "costumer", expression = "java(userQuery.getCostumer().getUsername())")
+    @Mapping(target = "comments", expression = "java(userQuery.getComments().stream().map(commentMapper::toCommentOutDTO).toList())")
     UserQueryOutDTO toUserQueryOutDTO(UserQuery userQuery);
 }

@@ -8,6 +8,7 @@ import com.ver.QueryBuilder.repository.CostumerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +20,8 @@ public class CostumerService {
 
     public CostumerOutDTO createCostumer(CostumerInDTO costumerInDTO) {
         Costumer costumer = costumerMapper.toCostumer(costumerInDTO);
+        costumer.setComments(new ArrayList<>());
+        costumer.setUserQueries(new ArrayList<>());
         costumerRepository.save(costumer);
         return costumerMapper.toCostumerOutDTO(costumer);
     }
