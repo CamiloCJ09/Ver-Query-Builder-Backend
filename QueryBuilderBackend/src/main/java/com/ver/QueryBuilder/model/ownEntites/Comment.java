@@ -20,7 +20,7 @@ public class Comment {
     private String comment;
 
     @ManyToOne
-    private Costumer costumer;
+    private Customer customer;
 
     @ManyToOne
     private UserQuery userQuery;

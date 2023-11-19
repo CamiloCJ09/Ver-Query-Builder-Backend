@@ -11,7 +11,7 @@ public interface CommentMapper {
 
     Comment toComment(CommentInDTO commentInDTO);
 
-    @Mapping(target = "costumerId", expression = "java(comment.getCostumer().getId())")
+    @Mapping(target = "costumerId", expression = "java(comment.getCustomer().getId())")
     @Mapping(target = "userQueryId", expression = "java(comment.getUserQuery().getId())")
     CommentOutDTO toCommentOutDTO(Comment comment);
 }

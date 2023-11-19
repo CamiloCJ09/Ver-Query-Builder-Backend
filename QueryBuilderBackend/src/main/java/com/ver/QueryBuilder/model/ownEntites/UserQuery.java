@@ -22,7 +22,7 @@ public class UserQuery {
     private String comment;
 
     @ManyToOne
-    private Costumer costumer;
+    private Customer customer;
 
     @OneToMany(mappedBy = "userQuery")
     private List<Comment> comments;

@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Costumer {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,10 +20,10 @@ public class Costumer {
 
     private String username;
 
-    @OneToMany(mappedBy = "costumer")
+    @OneToMany(mappedBy = "customer")
     private List<UserQuery> userQueries;
 
-    @OneToMany(mappedBy = "costumer")
+    @OneToMany(mappedBy = "customer")
     private List<Comment> comments;
 
 }

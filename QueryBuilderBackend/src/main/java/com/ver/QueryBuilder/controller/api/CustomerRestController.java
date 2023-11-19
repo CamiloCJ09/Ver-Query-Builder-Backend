@@ -1,7 +1,7 @@
 package com.ver.QueryBuilder.controller.api;
 
-import com.ver.QueryBuilder.dto.request.CostumerInDTO;
-import com.ver.QueryBuilder.dto.response.CostumerOutDTO;
+import com.ver.QueryBuilder.dto.request.CustomerInDTO;
+import com.ver.QueryBuilder.dto.response.CustomerOutDTO;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping(CostumerRestController.BASE_URL)
-public interface CostumerRestController {
+@RequestMapping(CustomerRestController.BASE_URL)
+public interface CustomerRestController {
 
         String BASE_URL = "/api/costumer";
 
         @GetMapping("/")
-        public List<CostumerOutDTO> getAllCostumers();
+        public List<CustomerOutDTO> getAllCostumers();
 
         @PostMapping("/")
-        public CostumerOutDTO createCostumer(@Valid @RequestBody CostumerInDTO costumerInDTO);
+        public CustomerOutDTO createCostumer(@Valid @RequestBody CustomerInDTO customerInDTO);
 
 }
