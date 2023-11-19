@@ -1,4 +1,4 @@
-package com.ver.QueryBuilder.model;
+package com.ver.QueryBuilder.model.bigqueryEntities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

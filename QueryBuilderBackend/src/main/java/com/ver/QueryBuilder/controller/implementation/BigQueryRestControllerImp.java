@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BigQueryRestControllerImp implements BigQueryRestController {
 
     private final BigQueryService bigQueryService;
-    @Override
+
     public String test() throws InterruptedException {
         return bigQueryService.basicQuery();
     }
