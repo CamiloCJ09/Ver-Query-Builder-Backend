@@ -25,9 +25,9 @@ import {
 	DiscordIcon,
 	HeartFilledIcon,
 	SearchIcon,
+  Logo
 } from "@/components/icons";
 
-import { Logo } from "@/components/icons";
 
 export const Navbar = () => {
 	const searchInput = (
@@ -83,28 +83,23 @@ export const Navbar = () => {
 				justify="end"
 			>
 				<NavbarItem className="hidden sm:flex gap-2">
-					<Link isExternal href={siteConfig.links.twitter} aria-label="Twitter">
-						<TwitterIcon className="text-default-500" />
-					</Link>
-					<Link isExternal href={siteConfig.links.discord} aria-label="Discord">
-						<DiscordIcon className="text-default-500" />
-					</Link>
-					<Link isExternal href={siteConfig.links.github} aria-label="Github">
-						<GithubIcon className="text-default-500" />
-					</Link>
+					
 					<ThemeSwitch />
 				</NavbarItem>
 				<NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
 				<NavbarItem className="hidden md:flex">
+
+          {// Change this to your login page
+          }
 					<Button
             isExternal
 						as={Link}
 						className="text-sm font-normal text-default-600 bg-default-100"
 						href={siteConfig.links.sponsor}
-						startContent={<HeartFilledIcon className="text-danger" />}
+						startContent={<Logo className="text-danger" />}
 						variant="flat"
 					>
-						Sponsor
+						Login
 					</Button>
 				</NavbarItem>
 			</NavbarContent>

@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,8 +23,8 @@ public class CommentService {
     private final CommentRepository commentRepository;
 
     public List<CommentOutDTO> getCommentByQueryId(String queryId) {
-        return commentRepository.findAllById(UUID.fromString(queryId)).stream().filter(Optional::isPresent)
-                .map(Optional::get).toList();
+        return commentRepository.findAllByUserQuery_Id(UUID.fromString(queryId)).stream()
+                .map(commentMapper::toCommentOutDTO).toList();
     }
 
     public CommentOutDTO createComment(CommentInDTO commentInDTO) {

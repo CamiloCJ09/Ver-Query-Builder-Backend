@@ -58,6 +58,10 @@ export const siteConfig = {
 			label: "Logout",
 			href: "/logout",
 		},
+    {
+      label: "Login",
+      href: "/login",
+    }
 	],
 	links: {
 		github: "https://github.com/nextui-org/nextui",
