@@ -103,20 +103,29 @@ public class BigQueryService {
                 .collect(Collectors.toList());
     }
 
+    private String queryBuilder(InternationalEducationInDTO internationalEducationInDTO){
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT\n" + "  country_name, country_code, indicator_name, indicator_code, value, year\n");
+        query.append("FROM  `bigquery-public-data.world_bank_intl_education.international_education`\n");
+        query.append("WHERE\n");
+        if (!internationalEducationInDTO.getSeriesCode().equals(""))
+            query.append("  indicator_code = '").append(internationalEducationInDTO.getSeriesCode()).append("'\n");
+        if (!internationalEducationInDTO.getCountryCode().equals(""))
+            query.append("  AND country_code = '").append(internationalEducationInDTO.getCountryCode()).append("'\n");
+        if (internationalEducationInDTO.getYear() != 0)
+            query.append("  AND year > ").append(internationalEducationInDTO.getYear()).append("\n");
+        if (!internationalEducationInDTO.getValue().equals(""))
+            query.append("  AND value > ").append(internationalEducationInDTO.getValue()).append("\n");
+        query.append("ORDER BY year");
+
+        return query.toString();
+    }
     public List<InternationalEducation> getInternationalEducation(InternationalEducationInDTO internationalEducationInDTO) throws InterruptedException, IOException {
 
         System.out.println(internationalEducationInDTO);
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
-                        "SELECT\n" +
-                                "  country_name, country_code, indicator_name, indicator_code, value, year\n" +
-                                "FROM\n" +
-                                "  `bigquery-public-data.world_bank_intl_education.international_education`\n" +
-                                "WHERE\n" +
-                                "  indicator_code = '"+internationalEducationInDTO.getSeriesCode()+"'\n" +
-                                "  AND country_code = '"+internationalEducationInDTO.getCountryCode()+"'\n" +
-                                "  AND year > "+internationalEducationInDTO.getYear()+"\n" +
-                                "ORDER BY year"
+                        queryBuilder(internationalEducationInDTO)
                         )
                         .setUseLegacySql(false)
                         .build();
