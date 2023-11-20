@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Indicator {
 
-        String series_code;
+        String seriesCode;
 
-        String indicator_name;
+        String indicatorName;
 }

@@ -75,8 +75,8 @@ public class BigQueryService {
 
         return StreamSupport.stream(result.iterateAll().spliterator(), false)
                 .map(row -> Indicator.builder()
-                        .series_code(row.get("series_code").getStringValue())
-                        .indicator_name(row.get("indicator_name").getStringValue())
+                        .seriesCode(row.get("series_code").getStringValue())
+                        .indicatorName(row.get("indicator_name").getStringValue())
                         .build())
                 .collect(Collectors.toList());
     }
