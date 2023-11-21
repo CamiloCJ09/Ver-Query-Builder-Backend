@@ -121,7 +121,7 @@ And this would be the whole guide of how to use the application.
 
 ## For developers 💻
 
-A brief description of your project.
+Welcome to the Visual Query Builder – a user-friendly interface for crafting queries without the need to write SQL! 🚀
 
 ### Getting Started
 
