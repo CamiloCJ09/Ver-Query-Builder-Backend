@@ -3,6 +3,8 @@
 
 Welcome to the Visual Query Builder – a user-friendly interface for crafting queries without the need to write SQL! 🚀
 
+Docker-compose video [here!!!](https://youtu.be/57mwJHqg6jM)
+
 ### Build Queries with Ease 👷
 
 As a user, you can construct queries effortlessly using checkboxes, drop-down menus, and textboxes. The graphical elements adapt to the dataset, providing an intuitive experience. For example, on Mercado Libre, use sliders and checkboxes to filter by price ranges, item conditions, and shipping speed. 🛒
