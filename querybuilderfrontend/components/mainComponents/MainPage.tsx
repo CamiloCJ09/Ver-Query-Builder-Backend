@@ -11,7 +11,9 @@ import { Button } from "@nextui-org/react"
 import QueryDataType from "@/types/QueryDataType"
 import GraphType from "@/types/GraphType"
 import bigQueryService from "@/service/bigQueryService"
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"
+import ChartComponent from "../charts/chart"
+import ModalSaveQuery from "../saveQueryComponents/SaveQueryComponent"
 
 interface MainDashboardProps {
   countries: CountryType[]
@@ -29,6 +31,7 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
   const [isEnable, setIsEnable] = useState<boolean>(false)
   const [queryFormData, setQueryData] = useState<QueryDataType>(dataForm)
   const [isQueryLoad, setIsQuery] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [dataGraph, setDataGraph] = useState<GraphType>()
 
   useEffect(() => {
@@ -47,13 +50,26 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
       return updatedQueryData
     })
   }
-
   const executeQuery = async () => {
     setIsQuery(true)
     try {
       const data = await bigQueryService.fetchRunQuery(queryFormData)
-      setDataGraph(data)
-      console.log(data)
+
+      const values: string[] = data.map((item: { value: any }) => item.value)
+      const years: string[] = data.map((item: { year: any }) => item.year)
+      const indicator: string = data[0].indicator_name
+      const country: string = data[0].country_name
+      const query: string = await bigQueryService.getQuery(queryFormData)
+
+      const dataChart: GraphType = {
+        values,
+        years,
+        indicator,
+        country,
+        query,
+      }
+      console.log(dataChart)
+      setDataGraph(dataChart)
     } catch (error) {
       toast.error("Error al cargar datos")
     } finally {
@@ -80,10 +96,33 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
               indicators={indicators}
               handleProperty={handleProperty}
             />
-            <div className="w-[400px] pt-6">
-              <Button color="primary" isDisabled={!isEnable} onClick={executeQuery}>
-                Let&apos;s query!!
-              </Button>
+            <div className="w-[400px] pt-6 flex flex-row justify-center">
+              <div className="mr-3">
+                <Button
+                  color="primary"
+                  isDisabled={!isEnable}
+                  onClick={executeQuery}
+                >
+                  Let&apos;s query!!
+                </Button>
+              </div>
+              
+            </div>
+            <div>
+              {isQueryLoad ? (
+                <div className="flex justify-center items-center pt-5">
+                  <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 "></div>
+                </div>
+              ) : (
+                dataGraph && (
+                  <div className="pt-4">
+                    <ChartComponent queryData={dataGraph} />
+                    <div className="flex flex-row justify-center mb-10 w-[100%]">
+                      <ModalSaveQuery queryData={dataGraph} />
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>

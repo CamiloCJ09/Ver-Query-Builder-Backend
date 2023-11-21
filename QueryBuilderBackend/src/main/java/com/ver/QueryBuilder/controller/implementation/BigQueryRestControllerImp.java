@@ -38,5 +38,10 @@ public class BigQueryRestControllerImp implements BigQueryRestController {
         return bigQueryService.getInternationalEducation(internationalEducationInDTO);
     }
 
+    @Override
+    public String getInternationalEducationQuery(InternationalEducationInDTO internationalEducationInDTO) throws InterruptedException, IOException {
+        return bigQueryService.queryBuilder(internationalEducationInDTO);
+    }
+
 
 }

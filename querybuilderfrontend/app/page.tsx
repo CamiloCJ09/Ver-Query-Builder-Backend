@@ -1,21 +1,54 @@
-import { Link } from "@nextui-org/link";
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code"
-import { button as buttonStyles } from "@nextui-org/theme";
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
-import {Select, SelectItem} from "@nextui-org/react";
-import { data } from "autoprefixer";
+"use client"
 
+import React, { useEffect, useState } from "react"
 
-export default function Home() {
+import bigQueryService from "@/service/bigQueryService"
 
-  
-	return (
-		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-			
-      
-		</section>
-	);
+import { toast } from "react-hot-toast"
+import { CircularProgress } from "@nextui-org/progress"
+import CountryType from "@/types/CountryType"
+import MainDashboard from "@/components/mainComponents/MainPage"
+import IndicatorType from "@/types/IndicatorType"
+
+const DashboardPage = () => {
+  const [countries, setCountries] = useState<CountryType[]>([])
+  const [indicators, setIndicators] = useState<IndicatorType[]>([])
+
+  const fetchData = async () => {
+    try {
+      const [dataCountry, dataIndicators] = await Promise.all([
+        bigQueryService.fetchDataCountry(),
+        bigQueryService.fetchDataIndicator(),
+      ])
+
+      if (dataCountry) setCountries(dataCountry)
+      if (dataIndicators) setIndicators(dataIndicators)
+    } catch (error) {
+      toast.error("Error al cargar datos")
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  if (!countries.length)
+    return (
+      <>
+        <div className="flex items-center justify-center h-[100%]">
+          <CircularProgress label="Loading" size="lg" />
+        </div>
+      </>
+    )
+
+  return (
+    <>
+      <div className="text-center text-xl mt-4 align-middle">
+        <MainDashboard countries={countries} indicators={indicators} />
+      </div>
+    </>
+  )
 }
+
+export default DashboardPage
+

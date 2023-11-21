@@ -13,6 +13,8 @@ public interface CustomerMapper {
     final CommentMapper commentMapper = new CommentMapperImpl();
     Customer toCostumer(CustomerInDTO customerInDTO);
 
+    Customer toCustomer(CustomerOutDTO customerOutDTO);
+
     @Mapping(target = "userQueries", expression = "java(customer.getUserQueries().stream().map(userQueryMapper::toUserQueryOutDTO).toList())")
     @Mapping(target = "comments", expression = "java(customer.getComments().stream().map(commentMapper::toCommentOutDTO).toList())")
     CustomerOutDTO toCostumerOutDTO(Customer customer);

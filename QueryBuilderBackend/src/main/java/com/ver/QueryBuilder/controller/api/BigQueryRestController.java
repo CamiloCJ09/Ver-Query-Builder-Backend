@@ -31,4 +31,8 @@ public interface BigQueryRestController {
     @PostMapping ("/internationalEducation")
     @CrossOrigin(origins = "*")
     List<InternationalEducation> getInternationalEducation(@Valid @RequestBody InternationalEducationInDTO internationalEducationInDTO) throws InterruptedException, IOException;
+
+    @PostMapping ("/internationalEducation/get")
+    @CrossOrigin(origins = "*")
+    String getInternationalEducationQuery(@Valid @RequestBody InternationalEducationInDTO internationalEducationInDTO) throws InterruptedException, IOException;
 }

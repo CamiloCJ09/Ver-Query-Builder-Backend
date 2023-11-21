@@ -103,7 +103,7 @@ public class BigQueryService {
                 .collect(Collectors.toList());
     }
 
-    private String queryBuilder(InternationalEducationInDTO internationalEducationInDTO){
+    public String queryBuilder(InternationalEducationInDTO internationalEducationInDTO){
         StringBuilder query = new StringBuilder();
         query.append("SELECT\n" + "  country_name, country_code, indicator_name, indicator_code, value, year\n");
         query.append("FROM  `bigquery-public-data.world_bank_intl_education.international_education`\n");

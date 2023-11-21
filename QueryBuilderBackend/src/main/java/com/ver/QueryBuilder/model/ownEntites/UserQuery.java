@@ -27,6 +27,7 @@ public class UserQuery {
     @OneToMany(mappedBy = "userQuery")
     private List<Comment> comments;
 
+    @Column(length = 100000)
     private String query;
 
 }

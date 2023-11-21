@@ -6,7 +6,6 @@ interface SliderValueProps {
 }
 const SliderValue = ({handleProperty}:SliderValueProps) => {
 
-  const [value, setValue] = React.useState("")
 
   
   return (
@@ -16,9 +15,9 @@ const SliderValue = ({handleProperty}:SliderValueProps) => {
       </div>
       <div>
         <Slider
-          label="Value"
-          step={0.01}
-          maxValue={1}
+          label="Value (in %)"
+          step={1}
+          maxValue={100}
           minValue={0}
           defaultValue={0}
           onChange={(e) => handleProperty("value", e.toString())}
