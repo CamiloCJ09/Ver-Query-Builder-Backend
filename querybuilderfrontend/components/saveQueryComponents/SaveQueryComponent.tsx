@@ -118,7 +118,7 @@ const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
                   onPress={onClose}
                   onClick={handleSaveQuery}
                 >
-                  Guardar
+                  Save Query
                 </Button>
               </ModalFooter>
             </>

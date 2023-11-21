@@ -49,7 +49,7 @@ const QueryTableDetail = ({ query }: QueryDetailProps) => {
   return (
     <>
       <Button onPress={onOpen} size="sm" color="primary">
-        Ver Resultado
+        See results
       </Button>
 
       <Modal
