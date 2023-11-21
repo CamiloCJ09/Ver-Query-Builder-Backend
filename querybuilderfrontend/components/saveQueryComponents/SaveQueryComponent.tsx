@@ -26,6 +26,11 @@ const queryFormSave: QuerySaveFormType = {
   costumer: "",
   query: "",
   id: "",
+  countryCode: "",
+  seriesCode : "",
+  year       : "",
+  value      : "0"
+
 };
 
 const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
@@ -33,11 +38,18 @@ const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
   const [queryForm, setQueryForm] = useState<QuerySaveFormType>(queryFormSave);
 
   useEffect(() => {
+    console.log(queryData);
     const querySQL = queryData.query || "";
     setQueryForm((prevQueryForm) => ({
       ...prevQueryForm,
       query: querySQL,
+      seriesCode: queryData.indicator,
+      countryCode: queryData.countryCode,
+      value: queryData.value,
+      year: queryData.year,
+
     }));
+    console.log(queryForm);
   }, []);
 
   const handleQueryForm = (property: string, value: string) => {
@@ -49,6 +61,7 @@ const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
 
   const handleSaveQuery = async () => {
     try {
+      console.log(queryForm);
       await bigQueryService.fetchSaveQuery(queryForm);
       toast.success("Query saved successfully");
     } catch (error) {
@@ -66,10 +79,12 @@ const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                Save Query
+                Storage your query!!
               </ModalHeader>
               <ModalBody>
-                <p>Input the data to save your query.</p>
+                <p>Complete the fields to save your query.
+                It doesn&apos;t matter if you haven&apos;t created an account, just enter the name under which you want to save the query
+                </p>
                 <Input
                   value={queryForm.costumer}
                   onChange={(value) =>

@@ -24,5 +24,13 @@ public class UserQueryOutDTO {
 
     private String costumer;
 
+    private String countryCode;
+
+    private String seriesCode;
+
+    private int year;
+
+    private String value;
+
     private List<CommentOutDTO> comments;
 }

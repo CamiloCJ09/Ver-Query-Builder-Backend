@@ -30,6 +30,7 @@ public class UserQueryService {
     }
 
     public UserQueryOutDTO createUserQuery(UserQueryInDTO userQueryInDTO) {
+        System.out.println(userQueryInDTO);
         UserQuery userQuery = userQueryMapper.toUserQuery(userQueryInDTO);
         Customer customer = customerRepository.findCostumerByUsername(userQueryInDTO.getCostumer()).orElse(null);
         if (customer == null) {

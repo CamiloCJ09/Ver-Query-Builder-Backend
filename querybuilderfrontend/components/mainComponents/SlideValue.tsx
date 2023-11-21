@@ -2,11 +2,15 @@ import React, { useEffect } from "react"
 import { Slider } from "@nextui-org/react"
 
 interface SliderValueProps {
+  valueParam: string
   handleProperty: (property: string, value: string) => void
 }
-const SliderValue = ({handleProperty}:SliderValueProps) => {
+const SliderValue = ({handleProperty, valueParam}:SliderValueProps) => {
 
 
+  useEffect(() => {
+    handleProperty("value", valueParam);
+  }, []);
   
   return (
     <div>
@@ -19,7 +23,7 @@ const SliderValue = ({handleProperty}:SliderValueProps) => {
           step={1}
           maxValue={100}
           minValue={0}
-          defaultValue={0}
+          defaultValue={Number(valueParam)}
           onChange={(e) => handleProperty("value", e.toString())}
           className="flex w-[400px ] flex-col justify-center gap-4 mt-5 font-bold"
         />

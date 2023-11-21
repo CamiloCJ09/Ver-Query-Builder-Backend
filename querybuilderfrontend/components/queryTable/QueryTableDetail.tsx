@@ -12,7 +12,7 @@ import {
 import QuerySaveFormType from "@/types/QuerySaveFormType";
 import { toast } from "react-hot-toast";
 import QueryToShow from "@/types/QueryToShow";
-
+import Link from "next/link";
 import bigQueryService from "@/service/bigQueryService";
 import GraphType from "@/types/GraphType";
 import CommentsComponent from "../comments/CommentsComponent";
@@ -49,7 +49,7 @@ const QueryTableDetail = ({ query }: QueryDetailProps) => {
   return (
     <>
       <Button onPress={onOpen} size="sm" color="primary">
-        Details
+        Ver Resultado
       </Button>
 
       <Modal
@@ -102,6 +102,21 @@ const QueryTableDetail = ({ query }: QueryDetailProps) => {
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
+                <Link
+                  href={{
+                    pathname: "/",
+                    query: {
+                      codeCountry: query.countryCode,
+                      seriesCode: query.seriesCode,
+                      year: query.year,
+                      value: query.value,
+                    },
+                  }}
+                >
+                  <Button color="primary" variant="light" onPress={onClose}>
+                    Edit Query
+                  </Button>
+                </Link>
               </ModalFooter>
             </>
           )}

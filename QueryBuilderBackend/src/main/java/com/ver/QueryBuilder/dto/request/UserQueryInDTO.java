@@ -24,4 +24,12 @@ public class UserQueryInDTO {
     @NotBlank
     private String costumer;
 
+    private String countryCode;
+
+    private String seriesCode;
+
+    private int year;
+
+    private String value;
+
 }

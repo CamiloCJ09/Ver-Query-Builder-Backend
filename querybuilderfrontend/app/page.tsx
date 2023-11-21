@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react"
 
 import bigQueryService from "@/service/bigQueryService"
-
+import { useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast"
 import { CircularProgress } from "@nextui-org/progress"
 import CountryType from "@/types/CountryType"
@@ -11,6 +11,7 @@ import MainDashboard from "@/components/mainComponents/MainPage"
 import IndicatorType from "@/types/IndicatorType"
 
 const DashboardPage = () => {
+  const searchParams = useSearchParams();
   const [countries, setCountries] = useState<CountryType[]>([])
   const [indicators, setIndicators] = useState<IndicatorType[]>([])
 
@@ -44,7 +45,7 @@ const DashboardPage = () => {
   return (
     <>
       <div className="text-center text-xl mt-4 align-middle">
-        <MainDashboard countries={countries} indicators={indicators} />
+        <MainDashboard countries={countries} indicators={indicators} params={searchParams} />
       </div>
     </>
   )

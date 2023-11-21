@@ -14,13 +14,19 @@ import bigQueryService from "@/service/bigQueryService"
 import { toast } from "react-hot-toast"
 import ChartComponent from "../charts/chart"
 import ModalSaveQuery from "../saveQueryComponents/SaveQueryComponent"
+import { ReadonlyURLSearchParams } from "next/navigation"
 
 interface MainDashboardProps {
   countries: CountryType[]
   indicators: IndicatorType[]
+  params: ReadonlyURLSearchParams
 }
 
-const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
+const MainDashboard = ({
+  countries,
+  indicators,
+  params,
+}: MainDashboardProps) => {
   const dataForm: QueryDataType = {
     countryCode: "",
     seriesCode: "",
@@ -31,7 +37,6 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
   const [isEnable, setIsEnable] = useState<boolean>(false)
   const [queryFormData, setQueryData] = useState<QueryDataType>(dataForm)
   const [isQueryLoad, setIsQuery] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [dataGraph, setDataGraph] = useState<GraphType>()
 
   useEffect(() => {
@@ -46,7 +51,6 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
   const handleProperty = (property: string, value: string) => {
     setQueryData((prevQueryData) => {
       let updatedQueryData = { ...prevQueryData, [property]: value }
-      console.log(updatedQueryData)
       return updatedQueryData
     })
   }
@@ -55,11 +59,16 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
     try {
       const data = await bigQueryService.fetchRunQuery(queryFormData)
 
+      console.log(data)
       const values: string[] = data.map((item: { value: any }) => item.value)
       const years: string[] = data.map((item: { year: any }) => item.year)
-      const indicator: string = data[0].indicator_name
+      const indicator: string = data[0].indicator_code
       const country: string = data[0].country_name
       const query: string = await bigQueryService.getQuery(queryFormData)
+      const countryCode: string = queryFormData.countryCode
+      const seriesCode: string = queryFormData.seriesCode
+      const year: string = queryFormData.year
+      const value: string = queryFormData.value
 
       const dataChart: GraphType = {
         values,
@@ -67,6 +76,11 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
         indicator,
         country,
         query,
+        countryCode,
+        seriesCode,
+        year,
+        value,
+
       }
       console.log(dataChart)
       setDataGraph(dataChart)
@@ -85,14 +99,22 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
         <div className="flex flex-row justify-around ">
           <div className="flex flex-col ">
             <SelectCountry
+              countryParam={params.get("codeCountry") || ""}
               countries={countries}
               handleProperty={handleProperty}
             />
-            <SelectYear handleProperty={handleProperty} />
-            <Slider handleProperty={handleProperty} />
+            <SelectYear
+              handleProperty={handleProperty}
+              yearParam={params.get("year") || ""}
+            />
+            <Slider
+              handleProperty={handleProperty}
+              valueParam={params.get("value") || ""}
+            />
           </div>
           <div className="flex flex-col w-[400px] ">
             <SelectIndicator
+              indicatorParam={params.get("seriesCode") || ""}
               indicators={indicators}
               handleProperty={handleProperty}
             />
@@ -106,7 +128,6 @@ const MainDashboard = ({ countries, indicators }: MainDashboardProps) => {
                   Let&apos;s query!!
                 </Button>
               </div>
-              
             </div>
             <div>
               {isQueryLoad ? (

@@ -2,6 +2,7 @@ package com.ver.QueryBuilder.model.ownEntites;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserQuery {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,5 +31,13 @@ public class UserQuery {
 
     @Column(length = 100000)
     private String query;
+
+    private String countryCode;
+
+    private String seriesCode;
+
+    private int year;
+
+    private String value;
 
 }

@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from "react";
-import IndicatorType from "@/types/IndicatorType";
-import {Select, SelectItem} from "@nextui-org/react";
+import React, { use, useEffect, useState } from "react"
+import IndicatorType from "@/types/IndicatorType"
+import { Select, SelectItem } from "@nextui-org/react"
 
 interface SelectIndicatorProps {
-  indicators : IndicatorType[];
-  handleProperty: (property: string, value: string) => void;
+  indicators: IndicatorType[]
+  indicatorParam: string
+  handleProperty: (property: string, value: string) => void
 }
 
-const SelectWorld = ({
-  indicators,
-  handleProperty
-}: SelectIndicatorProps) => {
-  const [selectedTypeFilter, setSelectedTypeFilter] = useState<string>("indicator");
+const SelectWorld = ({ indicators, handleProperty, indicatorParam }: SelectIndicatorProps) => {
+  const [selectedTypeFilter, setSelectedTypeFilter] = useState<string>("indicator")
 
+  useEffect(() => {
+    handleProperty("seriesCode", indicatorParam)
+  }, [])
   return (
     <>
-      <div >
+      <div>
         <div className="text-center mt-3 font-bold text-lg">
           Choose the indicator to filter
         </div>
-        
+
         {selectedTypeFilter === "indicator" && (
           <div className="flex w-full flex-row justify-center md:flex-nowrap gap-4 mt-5">
             <Select
@@ -27,20 +28,21 @@ const SelectWorld = ({
               placeholder="Search an indicator"
               className="w-[400px] text-tiny"
               items={indicators}
+              selectedKeys={[indicatorParam]}
               onChange={(e) => handleProperty("seriesCode", e.target.value)}
               size="lg"
             >
               {(item) => (
-                <SelectItem  key={item.seriesCode}>
+                <SelectItem key={item.seriesCode}>
                   {item.indicatorName}
-                </SelectItem >
+                </SelectItem>
               )}
             </Select>
           </div>
         )}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default SelectWorld;
+export default SelectWorld

@@ -4,6 +4,10 @@ type GraphType = {
   years: string[];
   values: string[];
   query: string;
+  countryCode: string;
+  seriesCode : string;
+  year       : string;
+  value      : string;
 };
 
 export default GraphType;

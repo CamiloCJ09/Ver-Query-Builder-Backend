@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Autocomplete, AutocompleteItem, Button } from "@nextui-org/react";
 import { dataFill } from "@/app/data/dataFill";
@@ -6,9 +6,15 @@ import {Select, SelectItem} from "@nextui-org/react";
 
 
 interface SelectYearProps {
+  yearParam: string;
   handleProperty: (property: string, value: string) => void;
 }
-const SelectYear = ({handleProperty}:SelectYearProps) => {
+const SelectYear = ({handleProperty, yearParam}:SelectYearProps) => {
+
+  useEffect(() => {
+    handleProperty("year", yearParam);
+  }, []);
+
   return (
     <div>
       <div className="text-center mt-3 font-bold text-lg">
@@ -20,6 +26,8 @@ const SelectYear = ({handleProperty}:SelectYearProps) => {
               placeholder="Select a year baseline"
               className="max-w-xs"
               items={dataFill.years}
+              
+              selectedKeys={[yearParam]}
               onChange={(e) => handleProperty("year", e.target.value)}
               size="lg"
             >
