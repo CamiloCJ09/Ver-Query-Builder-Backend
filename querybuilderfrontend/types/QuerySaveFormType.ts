@@ -1,4 +1,5 @@
 type QuerySaveFormType = {
+  id: string;
   queryname: string;
   comment: string;
   query: string;

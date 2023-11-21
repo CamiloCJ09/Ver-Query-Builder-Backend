@@ -13,8 +13,10 @@ public interface CommentRestController {
     String BASE_URL = "/api/comment";
 
     @GetMapping("/{queryId}")
+    @CrossOrigin(origins = "*")
     public List<CommentOutDTO> getCommentByQueryId(@PathVariable String queryId);
 
     @PostMapping("/")
+    @CrossOrigin(origins = "*")
     public CommentOutDTO createComment(@Valid @RequestBody CommentInDTO commentInDTO);
 }

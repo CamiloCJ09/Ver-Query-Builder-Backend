@@ -15,7 +15,6 @@ import {
 import GraphType from "@/types/GraphType";
 import QuerySaveFormType from "@/types/QuerySaveFormType";
 import { toast } from "react-hot-toast";
-import bigQuery from '@/api/bigQueryApi';
 
 interface SaveQueryComProps {
   queryData: GraphType;
@@ -26,6 +25,7 @@ const queryFormSave: QuerySaveFormType = {
   comment: "",
   costumer: "",
   query: "",
+  id: "",
 };
 
 const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {

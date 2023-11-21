@@ -1,20 +1,19 @@
 package com.ver.QueryBuilder.service;
 
-import ch.qos.logback.classic.Logger;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.bigquery.*;
 import com.ver.QueryBuilder.dto.request.InternationalEducationInDTO;
+import com.ver.QueryBuilder.dto.response.QueryExecuteInDTO;
 import com.ver.QueryBuilder.model.bigqueryEntities.Country;
 import com.ver.QueryBuilder.model.bigqueryEntities.Indicator;
 import com.ver.QueryBuilder.model.bigqueryEntities.InternationalEducation;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import java.util.*;
-import java.io.FileInputStream;
-import java.io.IOException;
-import org.springframework.stereotype.Service;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.UUID;
@@ -27,13 +26,16 @@ import java.util.stream.StreamSupport;
 public class BigQueryService {
 
     GoogleCredentials credentials;
-    {
+    @Autowired
+    public void GetDataToQueryService(Environment env, @Value("${spring.credentials.google}") String path) {
         try {
-            credentials = GoogleCredentials.fromStream(new FileInputStream("src/main/resources/credentials.json"));
+            System.out.println(env.getProperty("spring.credentials.google"));
+            this.credentials = GoogleCredentials.fromStream(new FileInputStream(path));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
     public BigQueryService() throws IOException {
     }
@@ -122,7 +124,6 @@ public class BigQueryService {
     }
     public List<InternationalEducation> getInternationalEducation(InternationalEducationInDTO internationalEducationInDTO) throws InterruptedException, IOException {
 
-        System.out.println(internationalEducationInDTO);
         QueryJobConfiguration queryConfig =
                 QueryJobConfiguration.newBuilder(
                         queryBuilder(internationalEducationInDTO)
@@ -130,6 +131,25 @@ public class BigQueryService {
                         .setUseLegacySql(false)
                         .build();
 
+        return getInternationalEducations(queryConfig);
+
+    }
+    public List<InternationalEducation> getInternationalEducationQuery(QueryExecuteInDTO query) throws InterruptedException, IOException {
+
+        System.out.println(query);
+        QueryJobConfiguration queryConfig =
+                QueryJobConfiguration.newBuilder(
+                            query.getQuery()
+                        )
+                        .setUseLegacySql(false)
+                        .build();
+
+        return getInternationalEducations(queryConfig);
+
+    }
+
+    @NotNull
+    private List<InternationalEducation> getInternationalEducations(QueryJobConfiguration queryConfig) throws IOException, InterruptedException {
         Job queryJob = config(queryConfig);
         System.out.println(queryJob);
 
@@ -144,6 +164,5 @@ public class BigQueryService {
                         .year(row.get("year").getNumericValue().intValue())
                         .build())
                 .collect(Collectors.toList());
-
     }
 }

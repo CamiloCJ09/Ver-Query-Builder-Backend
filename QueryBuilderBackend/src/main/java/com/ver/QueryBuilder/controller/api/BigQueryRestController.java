@@ -1,6 +1,7 @@
 package com.ver.QueryBuilder.controller.api;
 
 import com.ver.QueryBuilder.dto.request.InternationalEducationInDTO;
+import com.ver.QueryBuilder.dto.response.QueryExecuteInDTO;
 import com.ver.QueryBuilder.model.bigqueryEntities.Country;
 import com.ver.QueryBuilder.model.bigqueryEntities.Indicator;
 import com.ver.QueryBuilder.model.bigqueryEntities.InternationalEducation;
@@ -35,4 +36,8 @@ public interface BigQueryRestController {
     @PostMapping ("/internationalEducation/get")
     @CrossOrigin(origins = "*")
     String getInternationalEducationQuery(@Valid @RequestBody InternationalEducationInDTO internationalEducationInDTO) throws InterruptedException, IOException;
+
+    @PostMapping ("/internationalEducation/query")
+    @CrossOrigin(origins = "*")
+    List<InternationalEducation> getInternationalEducationQuery(@Valid @RequestBody QueryExecuteInDTO queryExecuteInDTO) throws InterruptedException, IOException;
 }

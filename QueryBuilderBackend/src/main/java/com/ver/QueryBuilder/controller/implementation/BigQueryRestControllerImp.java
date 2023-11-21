@@ -2,6 +2,7 @@ package com.ver.QueryBuilder.controller.implementation;
 
 import com.ver.QueryBuilder.controller.api.BigQueryRestController;
 import com.ver.QueryBuilder.dto.request.InternationalEducationInDTO;
+import com.ver.QueryBuilder.dto.response.QueryExecuteInDTO;
 import com.ver.QueryBuilder.model.bigqueryEntities.Country;
 import com.ver.QueryBuilder.model.bigqueryEntities.Indicator;
 import com.ver.QueryBuilder.model.bigqueryEntities.InternationalEducation;
@@ -41,6 +42,11 @@ public class BigQueryRestControllerImp implements BigQueryRestController {
     @Override
     public String getInternationalEducationQuery(InternationalEducationInDTO internationalEducationInDTO) throws InterruptedException, IOException {
         return bigQueryService.queryBuilder(internationalEducationInDTO);
+    }
+
+    @Override
+    public List<InternationalEducation> getInternationalEducationQuery(QueryExecuteInDTO query) throws InterruptedException, IOException {
+        return bigQueryService.getInternationalEducationQuery(query);
     }
 
 
