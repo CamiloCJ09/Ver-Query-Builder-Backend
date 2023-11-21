@@ -11,6 +11,12 @@ interface SelectYearProps {
 }
 const SelectYear = ({handleProperty, yearParam}:SelectYearProps) => {
 
+  const [selectedYear, setSelectedYear] = React.useState<string>(yearParam);
+
+  const handleYear = (property: string, value: string) => {
+    setSelectedYear(value);
+    handleProperty(property, value);
+  }
   useEffect(() => {
     handleProperty("year", yearParam);
   }, []);
@@ -27,8 +33,8 @@ const SelectYear = ({handleProperty, yearParam}:SelectYearProps) => {
               className="max-w-xs"
               items={dataFill.years}
               
-              selectedKeys={[yearParam]}
-              onChange={(e) => handleProperty("year", e.target.value)}
+              selectedKeys={selectedYear ? [selectedYear] : []}
+              onChange={(e) => handleYear("year", e.target.value)}
               size="lg"
             >
               {(item) => (

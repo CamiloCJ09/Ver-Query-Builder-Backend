@@ -59,7 +59,6 @@ const MainDashboard = ({
     try {
       const data = await bigQueryService.fetchRunQuery(queryFormData)
 
-      console.log(data)
       const values: string[] = data.map((item: { value: any }) => item.value)
       const years: string[] = data.map((item: { year: any }) => item.year)
       const indicator: string = data[0].indicator_code
@@ -82,7 +81,6 @@ const MainDashboard = ({
         value,
 
       }
-      console.log(dataChart)
       setDataGraph(dataChart)
     } catch (error) {
       toast.error("Error al cargar datos")

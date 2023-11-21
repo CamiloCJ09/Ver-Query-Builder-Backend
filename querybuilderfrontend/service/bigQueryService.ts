@@ -89,6 +89,10 @@ const executeSelectedQuery = async(queryData:QueryToShow) => {
       const indicator: string = data[0].indicator_name
       const country: string = data[0].country_name
       const query: string = queryData.query
+      const countryCode: string = data[0].country_code
+      const seriesCode: string = data[0].series_code
+      const year: string = data[0].year
+      const value: string = data[0].value
 
       const dataChart: GraphType = {
         values,
@@ -96,6 +100,10 @@ const executeSelectedQuery = async(queryData:QueryToShow) => {
         indicator,
         country,
         query,
+        countryCode,
+        seriesCode,
+        year,
+        value,
       }
     return dataChart;
   }catch(error){

@@ -38,7 +38,6 @@ const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
   const [queryForm, setQueryForm] = useState<QuerySaveFormType>(queryFormSave);
 
   useEffect(() => {
-    console.log(queryData);
     const querySQL = queryData.query || "";
     setQueryForm((prevQueryForm) => ({
       ...prevQueryForm,
@@ -49,7 +48,6 @@ const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
       year: queryData.year,
 
     }));
-    console.log(queryForm);
   }, []);
 
   const handleQueryForm = (property: string, value: string) => {
@@ -61,7 +59,6 @@ const ModalSaveQuery = ({ queryData }: SaveQueryComProps) => {
 
   const handleSaveQuery = async () => {
     try {
-      console.log(queryForm);
       await bigQueryService.fetchSaveQuery(queryForm);
       toast.success("Query saved successfully");
     } catch (error) {

@@ -15,6 +15,17 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for managing user query-related operations.
+ *
+ * This class provides methods to retrieve information about existing user queries and create new user queries.
+ * It interacts with the UserQueryRepository, CustomerRepository, CustomerService, and mappers for converting
+ * between DTOs and entities.
+ *
+ * @author Camilo Campaz
+ * @version 1.0
+ * @since 2023-11-21
+ */
 @Service
 @AllArgsConstructor
 public class UserQueryService {
@@ -25,10 +36,36 @@ public class UserQueryService {
     private final CustomerMapper customerMapper;
     private final UserQueryMapper userQueryMapper;
 
+
+    /**
+     * Retrieves a list of all user queries.
+     *
+     * @return A List of UserQueryOutDTOs representing all existing user queries.
+     *
+     * @see UserQueryRepository#findAll()
+     * @see List#stream()
+     * @see UserQueryMapper#toUserQueryOutDTO(UserQuery)
+     *
+     */
     public List<UserQueryOutDTO> getAllUserQueries() {
         return userQueryRepository.findAll().stream().map(userQueryMapper::toUserQueryOutDTO).toList();
     }
 
+    /**
+     * Creates a new user query based on the provided UserQueryInDTO.
+     *
+     * @param userQueryInDTO The UserQueryInDTO containing information for creating the user query.
+     * @return A UserQueryOutDTO representing the created user query.
+     * @throws RuntimeException Thrown if the associated customer is not found.
+     *
+     * @see UserQueryMapper#toUserQuery(UserQueryInDTO)
+     * @see CustomerRepository#findCostumerByUsername(String)
+     * @see CustomerService#createCostumer(CustomerInDTO)
+     * @see CustomerRepository#findCostumerByUsername(String)
+     * @see UserQueryMapper#toUserQueryOutDTO(UserQuery)
+     * @see UserQueryRepository#save(Object)
+     *
+     */
     public UserQueryOutDTO createUserQuery(UserQueryInDTO userQueryInDTO) {
         System.out.println(userQueryInDTO);
         UserQuery userQuery = userQueryMapper.toUserQuery(userQueryInDTO);

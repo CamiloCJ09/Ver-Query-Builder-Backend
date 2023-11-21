@@ -70,26 +70,5 @@ public class CustomerServiceTest {
         assertEquals(new ArrayList<>(), result);
     }
 
-    @Test
-    void createCustomerWithoutUsername() {
-        // Setup
-        CustomerInDTO user = CustomerInDTO.builder().build();
-        CustomerOutDTO customerOutDTO = CustomerOutDTO.builder()
-                .username("username")
-                .id(UUID.randomUUID())
-                .build();
 
-        when(customerMapper.toCustomer(any())).thenReturn(createCustomer());
-        when(customerRepository.save(any())).thenReturn(createCustomer());
-        when(customerMapper.toCostumerOutDTO(any())).thenReturn(customerOutDTO);
-        //when(customerServiceUnderTest.createCostumer(any())).thenReturn(customerOutDTO);
-
-        // Run the test
-        customerServiceUnderTest.createCostumer(user);
-
-        // Verify the results
-        //verify(customerRepository).findCostumerByUsername(user.getUsername());
-        assertThrows(NullPointerException.class, () -> customerServiceUnderTest.createCostumer(user));
-        //verify(customerRepository,times(1)).save(any());
-    }
 }

@@ -11,6 +11,12 @@ interface SelectCountryProps {
 const SelectCountry = ({ countries, handleProperty , countryParam}: SelectCountryProps) => {
   const [selectedTypeFilter, setSelectedTypeFilter] =useState<string>("country")
 
+  const [selectedCountry, setSelectedCountry] = useState<string>(countryParam)
+
+  const handleCountry = (property: string, value: string) => {
+    setSelectedCountry(value)
+    handleProperty(property, value)
+  }
   useEffect(() => {
     handleProperty("countryCode", countryParam)
   }, [])
@@ -28,8 +34,8 @@ const SelectCountry = ({ countries, handleProperty , countryParam}: SelectCountr
               placeholder="Search an country"
               className="max-w-xs"
               items={countries}
-              selectedKeys={[countryParam]}
-              onChange={(e) => handleProperty("countryCode", e.target.value)}
+              selectedKeys={selectedCountry ? [selectedCountry] : []}
+              onChange={(e) => handleCountry("countryCode", e.target.value)}
               size="lg"
             >
               {(item) => (

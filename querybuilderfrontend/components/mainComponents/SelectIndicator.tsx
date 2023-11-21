@@ -11,6 +11,12 @@ interface SelectIndicatorProps {
 const SelectWorld = ({ indicators, handleProperty, indicatorParam }: SelectIndicatorProps) => {
   const [selectedTypeFilter, setSelectedTypeFilter] = useState<string>("indicator")
 
+  const [selectedIndicator, setSelectedIndicator] = useState<string>(indicatorParam)
+
+  const handleIndicator = (property: string, value: string) => {
+    setSelectedIndicator(value)
+    handleProperty(property, value)
+  }
   useEffect(() => {
     handleProperty("seriesCode", indicatorParam)
   }, [])
@@ -28,8 +34,8 @@ const SelectWorld = ({ indicators, handleProperty, indicatorParam }: SelectIndic
               placeholder="Search an indicator"
               className="w-[400px] text-tiny"
               items={indicators}
-              selectedKeys={[indicatorParam]}
-              onChange={(e) => handleProperty("seriesCode", e.target.value)}
+              selectedKeys={selectedIndicator ? [selectedIndicator] : []}
+              onChange={(e) => handleIndicator("seriesCode", e.target.value)}
               size="lg"
             >
               {(item) => (
