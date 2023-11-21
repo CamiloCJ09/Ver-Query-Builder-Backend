@@ -2,7 +2,31 @@ version: '3.9'
 
 services:
 
-  
+  frontend:
+    image: 'hellnah71/querybuilderfrontend:latest'
+    container_name: querybuilder-frontend
+    ports:
+      - "9000:3000"
+    depends_on:
+      - backend
+      
+  backend:
+    image: 'hellnah71/querybuilderbackend:latest'
+    container_name: querybuilder-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+    - spring.datasource.url=jdbc:postgresql://db:5432/querybuilder
+    - spring.datasource.username=postgres
+    - spring.datasource.password=postgres
+    - spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+    - spring.datasource.driver-class-name=org.postgresql.Driver
+    - spring.jpa.hibernate.ddl-auto=update
+    - logging.level.org.springframework.security=DEBUG
+    - logging.level.org.hibernate.SQL=DEBUG
+    - spring.credentials.google=app/credentials.json
 
   db:
     image: 'postgres:latest'
